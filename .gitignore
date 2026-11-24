@@ -1,0 +1,19 @@
+# Compiled Binaries & Object Files
+*.o
+*.out
+*.exe
+server
+client
+peer1
+peer2
+gui_app
+
+# Build Directories
+bin/
+build/
+
+# Editor & System Temp Files
+.vscode/
+.DS_Store
+*.log
+*.tmp
