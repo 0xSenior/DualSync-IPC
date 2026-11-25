@@ -22,10 +22,23 @@ DualSync-IPC is designed to explore and compare two fundamental Inter-Process Co
 
 ---
 
+## 🏗️ System Architecture & Workflow Diagram
+
+The diagram below illustrates the end-to-end dataflow and concurrency model of **System A**:
+- **Client Processes:** Independent Unix processes connecting over loopback TCP (`127.0.0.1:8080`).
+- **Master Listener Thread:** Main server loop listening on port `8080`, continuously accepting new connections and assigning incremental client IDs.
+- **Worker Thread Pool:** Each connected client is immediately offloaded to a detached background worker thread (`std::thread::detach`), ensuring non-blocking concurrent communication.
+
+<p align="center">
+  <img src="docs/diagrams/system_a_workflow.png" alt="DualSync System A Architecture and Workflow Diagram" width="100%" />
+</p>
+
+---
+
 ## 📸 Live Demonstrations
 
 ### System A: Multi-Threaded TCP Socket Chat (Terminal)
-Real-time concurrent message exchange between multiple TCP clients (Client 1, Client 2) and the multi-threaded server running on `127.0.0.1:8080`:
+Real-time concurrent message exchange between multiple TCP clients (`Client 1`, `Client 2`) and the multi-threaded server running on `127.0.0.1:8080`:
 
 <p align="center">
   <img src="docs/screenshots/socket_chat_demo.jpg" alt="DualSync System A Terminal Sockets Demo" width="95%" />
@@ -39,7 +52,8 @@ DualSync-IPC/
 ├── system-a-sockets/       # Networked Chat Engine (Sockets + Threads)
 ├── system-b-shm/           # Local High-Speed Chat Engine (Shared Memory + Semaphores)
 ├── gui/                    # Simple Graphical Interface
-└── docs/                   # Documentation, Screenshots, and Demo Video
+└── docs/                   # Documentation, Diagrams, and Screenshots
+    ├── diagrams/           # System Workflow & Architecture Diagrams
     └── screenshots/        # Verified Terminal & GUI Execution Logs
 ```
 
