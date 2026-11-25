@@ -47,10 +47,27 @@ int main() {
 
     int sock_fd = connect_to_server("127.0.0.1", PORT);
 
-    
-    string message = "Hello from Client";
-    send_message(sock_fd, message);
+    // - Only for testing
+    // string message = "Hello from Client";
+    // send_message(sock_fd, message);
 
+    string message;
+    while(true) {
+        cout << "> ";
+        getline(cin, message);
+
+        if(message == "exit") {
+            cout << "[Client] Exiting..." << endl;
+            break;
+        }
+
+        if(message.empty()) {
+            continue;
+        }
+
+        send_message(sock_fd, message);
+
+    }
     
     close(sock_fd);
 

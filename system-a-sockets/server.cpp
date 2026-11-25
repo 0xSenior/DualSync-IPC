@@ -60,14 +60,18 @@ int accept_client(int server_fd) {
 // Read incoming message and print it out
 void handle_client(int client_fd) {
     char buffer[BUFFER_SIZE] = {0};
-    
-    // grab incoming bytes from the client
-    int bytes_read = read(client_fd, buffer, BUFFER_SIZE - 1); // Buffer_Size - 1 to leave space for null terminator
-    if (bytes_read > 0) {
-        cout << "[Server Received]: " << buffer << endl;
+    while (true) {
+        // Clear buffer before read
+        memset(buffer, 0, BUFFER_SIZE);
+        int bytes_read = read(client_fd, buffer, BUFFER_SIZE - 1);
+        // error occurred
+        if (bytes_read <= 0) {
+            cout << "[Server] Client disconnected" << endl;
+            break;
+        }
+        cout << "[Server Received] : " << buffer << endl;
     }
-
-    // close this client's connection
+    
     close(client_fd);
 }
 
