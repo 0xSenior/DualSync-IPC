@@ -5,6 +5,8 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include "common.h"
+#include <thread>
+
 using namespace std;
 
 
@@ -58,7 +60,7 @@ int accept_client(int server_fd) {
 }
 
 // Read incoming message and print it out
-void handle_client(int client_fd) {
+void handle_client(int client_fd, int client_id) {
     char buffer[BUFFER_SIZE] = {0};
     while (true) {
         // Clear buffer before read
@@ -66,21 +68,29 @@ void handle_client(int client_fd) {
         int bytes_read = read(client_fd, buffer, BUFFER_SIZE - 1);
         // error occurred
         if (bytes_read <= 0) {
-            cout << "[Server] Client disconnected" << endl;
+            cout << "[Server] Client " << client_id << " disconnected" << endl;
             break;
         }
-        cout << "[Server Received] : " << buffer << endl;
+        cout << "[ Client " << client_id << "] : " << buffer << endl;
     }
-    
+
     close(client_fd);
 }
 
 int main() {
 
     int server_fd = start_server(PORT);
-    int client_fd = accept_client(server_fd);
-    handle_client(client_fd);
+    int client_counter = 0;
 
+    while(true){
+    int client_fd = accept_client(server_fd);
+    client_counter++;
+
+    cout << "[Server] Client " << client_counter << " joined the chat" << endl;
+
+    thread(handle_client, client_fd, client_counter).detach();
+    }
+    
     close(server_fd);
     return 0;
 }

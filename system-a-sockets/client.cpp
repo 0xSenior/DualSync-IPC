@@ -25,7 +25,9 @@ int connect_to_server(const char* server_ip, int port) {
         exit(1);
     }
 
-        if (connect(sock_fd, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) {
+
+    int status = connect(sock_fd, (struct sockaddr*)&serv_addr, sizeof(serv_addr));
+    if (status < 0) {
         cerr << "[Client] Connection failed" << endl;
         exit(1);
     }

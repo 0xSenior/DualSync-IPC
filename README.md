@@ -24,8 +24,8 @@ DualSync-IPC is designed to explore and compare two fundamental Inter-Process Co
 
 ## 📸 Live Demonstrations
 
-### System A: Interactive TCP Socket Communication (Terminal)
-Real-time continuous message exchange between the TCP Client and Server processes running on `127.0.0.1:8080`:
+### System A: Multi-Threaded TCP Socket Chat (Terminal)
+Real-time concurrent message exchange between multiple TCP clients (Client 1, Client 2) and the multi-threaded server running on `127.0.0.1:8080`:
 
 <p align="center">
   <img src="docs/screenshots/socket_chat_demo.jpg" alt="DualSync System A Terminal Sockets Demo" width="95%" />
